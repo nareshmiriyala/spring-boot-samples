@@ -8,7 +8,9 @@ import netgloo.search.UserSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -38,8 +40,9 @@ public class MainController {
   @RequestMapping("/")
   @ResponseBody
   public String index() {
-    return "Proudly handcrafted by " + 
-        "<a href='http://netgloo.com/en'>netgloo</a> :)";
+//    return "Proudly handcrafted by " +
+//        "<a href='http://netgloo.com/en'>netgloo</a> :)";
+    return "user";
   }
 
 
@@ -62,6 +65,16 @@ public class MainController {
     model.addAttribute("searchResults", searchResults);
     return "search";
   }
-
+  @RequestMapping(value="/user", method= RequestMethod.POST)
+  public String greetingSubmit(@ModelAttribute User user, Model model) {
+    model.addAttribute("user", user);
+    userSearch.save(user);
+    return "result";
+  }
+    @RequestMapping(value="/user", method=RequestMethod.GET)
+    public String greetingForm(Model model) {
+        model.addAttribute("user", new User());
+        return "user";
+    }
 
 } // class MainController

@@ -73,5 +73,9 @@ public class UserSearch {
     return results;
   } // method search
 
+  public void save(User user){
+    entityManager.persist(user);
+  }
+
 
 } // class UserSearch
